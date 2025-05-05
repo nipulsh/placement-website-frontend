@@ -3,17 +3,39 @@ import { motion } from "framer-motion";
 import { useAuth } from "../store/auth-context";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Signup = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const result = await login(email, password);
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const result = await signup({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    });
+
     if (result.success) {
       navigate("/dashboard");
     } else {
@@ -39,7 +61,7 @@ const Login = () => {
           transition={{ delay: 0.2 }}
           className="text-3xl font-bold text-center text-gray-800 mb-8"
         >
-          Welcome Back
+          Create Account
         </motion.h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -49,13 +71,14 @@ const Login = () => {
             transition={{ delay: 0.3 }}
           >
             <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
+              Full Name
             </label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full text-black px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
               required
             />
           </motion.div>
@@ -66,13 +89,50 @@ const Login = () => {
             transition={{ delay: 0.4 }}
           >
             <label className="block text-gray-700 text-sm font-bold mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <label className="block text-gray-700 text-sm font-bold mb-2">
               Password
             </label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              required
+            />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
               required
             />
           </motion.div>
@@ -93,23 +153,23 @@ const Login = () => {
             type="submit"
             className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors"
           >
-            Login
+            Sign Up
           </motion.button>
         </form>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.7 }}
           className="mt-4 text-center text-gray-600"
         >
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <motion.span
             whileHover={{ scale: 1.05 }}
             className="text-purple-600 cursor-pointer"
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/login")}
           >
-            Sign up
+            Login
           </motion.span>
         </motion.p>
       </motion.div>
@@ -117,4 +177,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

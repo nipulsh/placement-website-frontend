@@ -5,6 +5,10 @@ export const store = configureStore({
   reducer: {
     role: roleSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;

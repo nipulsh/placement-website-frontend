@@ -1,9 +1,7 @@
-import React, { useState } from "react";
 import ProfileExplaination from "./profile-explain";
 
-const DashboardProfileAbout = () => {
+const DashboardProfileAbout = (props) => {
   const headings = ["Experience", "Projects", "Education", "Skills"];
-  const [section, setSection] = useState(0);
 
   const profiles = [
     [
@@ -55,26 +53,26 @@ const DashboardProfileAbout = () => {
 
   return (
     <div className="h-full w-full flex flex-col mt-3">
-      <div className="flex-1/10 flex h-[15%] justify-between">
+      <div className=" flex h-auto justify-between">
         {headings.map((heading, index) => (
           <button
             key={index}
             className={`cursor-pointer text-[1.1rem] pt-1 pb-2 pr-3 pl-3 text-center rounded-[20px] ${
-              section === index ? "bg-[#6635D9]" : "bg-[#979EB0]"
+              props.section === index ? "bg-[#6635D9]" : "bg-[#979EB0]"
             }`}
-            onClick={() => setSection(index)}
+            onClick={() => props.handleSetSection(index)}
           >
             {heading}
           </button>
         ))}
       </div>
       <div className="flex-9/10 flex flex-col gap-3 mt-2 overflow-y-auto overflow-x-hidden">
-        {profiles[section].map((entry, index) => (
+        {profiles[props.section]?.map((entry, index) => (
           <ProfileExplaination
             key={index}
             profile={entry}
-            heading={headings[section]}
-            section={section}
+            heading={headings[props.section]}
+            section={props.section}
           />
         ))}
       </div>
