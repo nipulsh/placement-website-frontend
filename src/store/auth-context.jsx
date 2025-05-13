@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, login, signup, logout, loading }}>
-      {children}
+      <div className="pt-16 min-h-screen">{children}</div>
     </AuthContext.Provider>
   );
 };

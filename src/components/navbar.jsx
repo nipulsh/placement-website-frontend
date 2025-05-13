@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { useAuth } from "../store/auth-context";
+import { FaUserCircle } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Navbar = () => {
+  const location = useLocation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,43 +17,48 @@ const Navbar = () => {
   };
 
   const getRoleSpecificLinks = () => {
+    // Helper to determine if link is active
+    const isActive = (to) => location.pathname === to;
+    const baseClass = "px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors";
+    const activeClass = "bg-indigo-100 text-indigo-700 font-bold shadow";
+    const inactiveClass = "text-slate-700 hover:text-indigo-600";
     switch (user?.role) {
       case "student":
         return (
           <>
             <Link
               to="/dashboard"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/announcements") ? activeClass : inactiveClass}`}
             >
               Dashboard
             </Link>
             <Link
               to="/companies"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/companies") ? activeClass : inactiveClass}`}
             >
               Companies
             </Link>
             <Link
               to="/portfolio"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/portfolio") ? activeClass : inactiveClass}`}
             >
               Portfolio
             </Link>
             <Link
               to="/messages"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/messages") ? activeClass : inactiveClass}`}
             >
               Messages
             </Link>
             <Link
               to="/announcements"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/announcements") ? activeClass : inactiveClass}`}
             >
               Announcements
             </Link>
             <Link
               to="/cv"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/cv") ? activeClass : inactiveClass}`}
             >
               CV Manager
             </Link>
@@ -61,19 +69,19 @@ const Navbar = () => {
           <>
             <Link
               to="/dashboard"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/announcements") ? activeClass : inactiveClass}`}
             >
               Dashboard
             </Link>
             <Link
               to="/applications"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/applications") ? activeClass : inactiveClass}`}
             >
               Applications
             </Link>
             <Link
               to="/announcements"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              className={`${baseClass} ${isActive("/announcements") ? activeClass : inactiveClass}`}
             >
               Announcements
             </Link>
@@ -83,26 +91,26 @@ const Navbar = () => {
         return (
           <>
             <Link
-              to="/dashboard"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              to="/faculty/dashboard"
+              className={`${baseClass} ${isActive("/faculty/dashboard") ? activeClass : inactiveClass}`}
             >
               Dashboard
             </Link>
             <Link
-              to="/students"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              to="/faculty/analysis"
+              className={`${baseClass} ${isActive("/faculty/analysis") ? activeClass : inactiveClass}`}
             >
-              Students
+              Analysis
             </Link>
             <Link
-              to="/companies"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              to="/faculty/company"
+              className={`${baseClass} ${isActive("/faculty/company") ? activeClass : inactiveClass}`}
             >
               Companies
             </Link>
             <Link
-              to="/announcements"
-              className="text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium whitespace-nowrap"
+              to="/faculty/announcements"
+              className={`${baseClass} ${isActive("/faculty/announcements") ? activeClass : inactiveClass}`}
             >
               Announcements
             </Link>

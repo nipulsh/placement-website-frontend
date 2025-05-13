@@ -11,6 +11,9 @@ import StudentNews from "../roles/student/news/announcements";
 import CVManager from "../components/CVManager";
 import Navbar from "../components/navbar";
 import FacultyDashboard from "../roles/faculty/dashboard/dashboard";
+import FacultyAnalysis from "../roles/faculty/facultyAnalysis/facultyAnalysis";
+import FacultyCompany from "../roles/faculty/facultyCompany/facultyCompany";
+import FacultyAnnouncements from "../roles/faculty/facultyAnnouncements/FacultyAnnouncements";
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
@@ -62,6 +65,36 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute role="faculty">
             <FacultyDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Faculty Analysis */}
+      <Route
+        path="/faculty/analysis"
+        element={
+          <ProtectedRoute role="faculty">
+            <FacultyAnalysis />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Faculty Company Management */}
+      <Route
+        path="/faculty/company"
+        element={
+          <ProtectedRoute role="faculty">
+            <FacultyCompany />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Faculty Announcements */}
+      <Route
+        path="/faculty/announcements"
+        element={
+          <ProtectedRoute role="faculty">
+            <FacultyAnnouncements />
           </ProtectedRoute>
         }
       />

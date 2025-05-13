@@ -23,7 +23,7 @@
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.20.0",
     "tpo-portal": "file:",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.12"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
